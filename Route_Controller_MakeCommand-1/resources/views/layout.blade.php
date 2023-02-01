@@ -39,5 +39,3 @@
     
 </body>
 </html>
-
-git commit -m "create PostController chenges to Usercontroller inside loadData Function create layout.blade.php file  "

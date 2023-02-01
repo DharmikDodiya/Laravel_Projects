@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 use App\PaymentService\Paypal;
-
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -74,3 +74,6 @@ Route::view('view','/view');
 // Route::get("users",[UserController::class,'loadData']);
 Route::post("users",[UserController::class,'getData']);
 Route::view("login",'login');
+
+//==========================get Data database==============================
+Route::get("user",[UserController::class,'getDataDatabase']);
