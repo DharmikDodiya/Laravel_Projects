@@ -25,6 +25,10 @@ class UserController extends Controller
            return view("view",["names"=>$data]);
     }
 
+    function getData(Request $req){
+       return $req->input();
+    }
+
     
 }
 

@@ -71,4 +71,6 @@ Route::view('view','/view');
 
 //========================controler pass method============================
 
-Route::get("users",[UserController::class,'loadData']);
+// Route::get("users",[UserController::class,'loadData']);
+Route::post("users",[UserController::class,'getData']);
+Route::view("login",'login');
