@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 use App\PaymentService\Paypal;
-use App\Http\Controllers\Blog;
 
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,14 +44,18 @@ use App\Http\Controllers\Blog;
 //     \app\App\PaymentService\Paypal::class));
 // });
 
-// Route::get('/list',[Blog::class,'BlogList']);
-// Route::get('/add',[Blog::class,'addBlog']);
-// Route::get('/update',[Blog::class,'UpdateBlog']);
+//=======================Controller Route===============================
+Route::get('/list',[UserController::class,'BlogList']);
+Route::get('/add',[UserController::class,'addBlog']);
+Route::get('/update',[UserController::class,'UpdateBlog']);
 
-Route::controller(Blog::class)->group(function(){
-Route::get('/list','BlogList');
-Route::get('/add','addBlog');
-Route::get('/update','UpdateBlog');
+
+//=====================Group Route Controller===========================
+
+Route::controller(UserController::class)->group(function(){
+Route::get('/list','UserList');
+Route::get('/add','addUser');
+Route::get('/update','UpdateUser');
 
 
 });
@@ -59,6 +63,12 @@ Route::get('/update','UpdateBlog');
 Route::view('about','/about');
 Route::view('view','/view');
 
-Route::get('/{name}',function($name){
-    return view('welcome',['name'=>$name]);
-});
+//======================controller pass parameter=========================
+
+// Route::get('/{name}',function($name){
+//     return view('view',['name'=>$name]);
+// });
+
+//========================controler pass method============================
+
+Route::get("users",[UserController::class,'loadData']);
