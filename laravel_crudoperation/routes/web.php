@@ -31,4 +31,5 @@ Route::get('show',[StudentController::class,'show']);
 
 Route::get('/delete/{id}',[StudentController::class,'destroy']);
 
-Route::get('/edit/{id}',[StudentController::class,'edit']);
+Route::get('/edit/{id}',[StudentController::class,'edit'])->name('edit');
+Route::post('/update/{id}',[StudentController::class,'update'])->name('update');

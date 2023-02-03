@@ -39,22 +39,29 @@ class StudentController extends Controller
             'email'=>'required|email|unique:students',
             'contactno'=>'required|numeric|digits:10|unique:students',
             'dob'=>'required',
+            'gender'=>'required',
             'password'=>'required',
             'confirm_password'=>'required|same:password'
     ]);
-        
+
+        $extension = $request->file('image')->extension();
+        $path = $request->file('image')->storeAs('images',time().".".$extension);   
+      
         $student = new Student();
         $student->studentname=$request->name;
         $student->email=$request->email;
         $student->contactno=$request->contactno;
         $student->dateofbirth=$request->dob;
         $student->gender=$request->gender;
-        $student->image=$request->image;
-        $student->password=md5($request->password) ;
+        $student->password=md5($request->password); 
+        $student->image=$path;
+
         //$student->confirm_password=md5($request->confirm_password) ;
+        // $student->image=$request->file('image')->store('images');
+        // $student-> image = $path;
         $student->save();
 
-        return redirect('show');
+        return redirect('addstudent');
 }
 
     /**
@@ -78,7 +85,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $data =  Student::find($id);
-        return view('display',['data'=>$data]);
+        $data = compact('data');
+        return view('edit')->with($data);
     }
 
     /**
@@ -88,9 +96,24 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id )
     {
-        //
+       
+        $updatedata = Student::find($id);
+       
+    
+        $updatedata->studentname=$request->name;
+        $updatedata->email=$request->email;
+        $updatedata->contactno=$request->contactno;
+        $updatedata->dateofbirth=$request->dob;
+        $updatedata->gender=$request->gender;
+        $updatedata->image=$request->image;
+        $updatedata->password=md5($request->password) ;
+        
+        $updatedata->save();
+
+        return redirect('addstudent');
+
     }
 
     /**

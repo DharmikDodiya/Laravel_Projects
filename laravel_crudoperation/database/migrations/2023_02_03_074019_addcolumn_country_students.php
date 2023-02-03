@@ -14,11 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('students',function($table){
-            $table->dropColumn('confirm_password');
-            
+            $table->string("country",20)->nullable();
         });
-
-        
     }
 
     /**
@@ -29,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('students',function($table){
-            $table->string("confirm_password");
+            $table->dropColumn('country');
         });
     }
 };
