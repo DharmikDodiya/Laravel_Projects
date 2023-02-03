@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="./assets/style.css" rel="stylesheet">
+    
     <title>Document</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
                   <th scope="col">ContactNo</th>
                   <th scope="col">DateOfBirth</th>
                   <th scope="col">Gender</th>
-                  <th scope="col">Operation</th>
+                  <th scope="col" class="text text-center">Operation</th>
                 </tr>
               </thead>
               <tbody>
@@ -30,8 +31,8 @@
                     <td scope="col">{{$item['contactno']}}</td>
                     <td scope="col">{{$item['dateofbirth']}}</td>
                     <td scope="col">{{$item['gender']}}</td>
-                    <td scope="col"><a href={{"delete/".$item['id']}}  class="btn btn-danger btn-sm text-dark " >Delete</a> 
-                    <a  href="{{route('edit',['id' =>$item->id])}}"  class="btn btn-warning btn-sm text-dark" >Update</a></td>
+                    <td scope="col"><a href={{"delete/".$item['id']}}  class="btn btn-danger btn-sm text-dark glyphicon glyphicon-trash" >Delete</a> 
+                    <a  href="{{route('edit',['id' =>$item->id])}}"  class="btn btn-warning btn-sm text-dark glyphicon glyphicon-edit"  >Update</a></td>
                     {{-- <a  href={{"edit/".$item['id']}}  class="btn btn-warning btn-sm text-dark" >Update</a></td> --}}
                   </tr>
                   @endforeach

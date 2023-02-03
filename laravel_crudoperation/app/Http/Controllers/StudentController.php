@@ -108,7 +108,7 @@ class StudentController extends Controller
         $updatedata->dateofbirth=$request->dob;
         $updatedata->gender=$request->gender;
         $updatedata->image=$request->image;
-        $updatedata->password=md5($request->password) ;
+        
         
         $updatedata->save();
 

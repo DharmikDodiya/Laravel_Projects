@@ -49,11 +49,7 @@
                     <label for="exampleFormControlInput1" class="form-label">Image</label>
                     <input type="file" class="form-control" id="image" name="image"  value="{{$data['image']}}" placeholder="Enter Image">
     
-                    <label for="exampleFormControlInput1" class="form-label">password</label>
-                    <input type="password" class="form-control" id="password" name="password"   placeholder="Enter Password">
-    
-                    <label for="exampleFormControlInput1" class="form-label">Confirm password</label>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="{{$data['confirm_password']}}" placeholder="ReEnter Password">
+                   
     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary close " data-bs-dismiss="modal">Close</button>
