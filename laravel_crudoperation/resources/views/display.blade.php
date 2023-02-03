@@ -30,7 +30,7 @@
                     <td scope="col">{{$item['contactno']}}</td>
                     <td scope="col">{{$item['dateofbirth']}}</td>
                     <td scope="col">{{$item['gender']}}</td>
-                    <td scope="col"><a href={{"delete/".$item['id']}}  class="btn btn-danger btn-sm text-dark" >Delete</a> 
+                    <td scope="col"><a href={{"delete/".$item['id']}}  class="btn btn-danger btn-sm text-dark " >Delete</a> 
                     <a  href={{"edit/".$item['id']}} data-bs-toggle="modal" data-bs-target="#editmodel" class="btn btn-warning btn-sm text-dark" >Update</a></td>
                   </tr>
                   @endforeach
