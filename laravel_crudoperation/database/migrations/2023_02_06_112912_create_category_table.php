@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('students',function($table){
-        //     $table->dropColumn('confirm_password');
-            
-        // });
-
-        
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('category_name');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -28,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        // Schema::table('students',function($table){
-        //     $table->string("confirm_password");
-        // });
+        Schema::dropIfExists('categories');
     }
 };

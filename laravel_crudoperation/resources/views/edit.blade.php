@@ -22,15 +22,35 @@
                     <input type="hidden" value="{{$data['id']}}">
                     <label for="exampleFormControlInput1" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{$data['studentname']}}" placeholder="Enter Name">
+                    <span class="text-danger">
+                      @error('name')
+                          {{$message}}
+                      @enderror 
+                  </span><br>
     
                     <label for="exampleFormControlInput1" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" value="{{$data['email']}}" placeholder="Enter Email">
+                    <span class="text-danger">
+                      @error('email')
+                          {{$message}}
+                      @enderror 
+                  </span><br>
     
                     <label for="exampleFormControlInput1" class="form-label">ContactNo</label>
                     <input type="text" class="form-control" id="contactno" name="contactno"  value="{{$data['contactno']}}" placeholder="Enter ContactNo">
+                    <span class="text-danger">
+                      @error('contactno')
+                          {{$message}}
+                      @enderror 
+                  </span><br>
     
                     <label for="exampleFormControlInput1" class="form-label">Date Of Birth</label>
                     <input type="date" class="form-control" id="dob" name="dob"  value="{{$data['dateofbirth']}}" placeholder="Enter Date Of Birth">
+                    <span class="text-danger">
+                      @error('dob')
+                          {{$message}}
+                      @enderror 
+                  </span><br>
     
                     <div> <label for="exampleFormControlInput1" class="form-label">Gender</label></div>
                     <div class="form-check form-check-inline">
@@ -45,9 +65,19 @@
                         <input class="form-check-input" type="radio" name="gender" id="inlineRadio3"  value="other" {{ $data->gender == 'other' ? 'checked' : ''}} >
                         <label class="form-check-label" for="inlineRadio3">Other</label>
                       </div><br>
+                      <span class="text-danger">
+                        @error('gender')
+                            {{$message}}
+                        @enderror 
+                    </span><br>
     
                     <label for="exampleFormControlInput1" class="form-label">Image</label>
                     <input type="file" class="form-control" id="image" name="image"  value="{{$data['image']}}" placeholder="Enter Image">
+                    <span class="text-danger">
+                      @error('image')
+                          {{$message}}
+                      @enderror 
+                  </span><br>
     
                    
     
@@ -79,6 +109,7 @@
     $('.close').on('click',function(){
         window.history.back();
     });
+
 
 </script>
 

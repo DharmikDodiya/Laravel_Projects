@@ -40,12 +40,13 @@ class StudentController extends Controller
             'contactno'=>'required|numeric|digits:10|unique:students',
             'dob'=>'required',
             'gender'=>'required',
+            'image'=>'required',
             'password'=>'required',
             'confirm_password'=>'required|same:password'
     ]);
 
         $extension = $request->file('image')->extension();
-        $path = $request->file('image')->storeAs('images',time().".".$extension);   
+        $path = $request->file('image')->storeAs('images',time().".".$extension,'public');   
       
         $student = new Student();
         $student->studentname=$request->name;
@@ -54,7 +55,7 @@ class StudentController extends Controller
         $student->dateofbirth=$request->dob;
         $student->gender=$request->gender;
         $student->password=md5($request->password); 
-        $student->image=$path;
+        $student->image='/storage/'. $path;
 
         //$student->confirm_password=md5($request->confirm_password) ;
         // $student->image=$request->file('image')->store('images');
@@ -98,20 +99,27 @@ class StudentController extends Controller
      */
     public function update(Request $request,$id )
     {
-       
+        $request->validate(['name'=>'required',
+        'email'=>'required|email',
+        'contactno'=>'required|numeric|digits:10',
+        'dob'=>'required',
+        'gender'=>'required',
+        'image'=>'required',
+      ]);
+
+        $extension = $request->file('image')->extension();
+        $path = $request->file('image')->storeAs('images',time().".".$extension,'public'); 
+        
         $updatedata = Student::find($id);
-       
-    
         $updatedata->studentname=$request->name;
         $updatedata->email=$request->email;
         $updatedata->contactno=$request->contactno;
         $updatedata->dateofbirth=$request->dob;
         $updatedata->gender=$request->gender;
-        $updatedata->image=$request->image;
+        $updatedata->image='/storage/'. $path;
         
         
         $updatedata->save();
-
         return redirect('addstudent');
 
     }
@@ -128,4 +136,27 @@ class StudentController extends Controller
         $studentdata->delete();
         return redirect('addstudent');
     }
+
+
+    public function forcedelete($id)
+    {
+        $studentdata = Student::onlyTrashed()->find($id);
+        $studentdata->forcedelete();
+        return redirect()->route('restore');
+    }
+
+    public function deletedDataShow(){
+    $data = Student::onlyTrashed()->get();
+        return view('restore',compact('data'));
+    }
+
+    public function restoreData($id){
+    
+       Student::onlyTrashed()->find($id)->restore();
+       return redirect()->route('restore');
+
+    }
+
+
+
 }

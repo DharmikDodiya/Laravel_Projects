@@ -10,17 +10,21 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <table class="table table-responsive table-secondary table-dark table-hover tablemargin mt-5">
     
-            <thead class="text-uppercase  ">
+
+    <div class="container">
+        <table class="table table-responsive table-secondary table-dark table-hover ">
+    
+            <thead class="text-uppercase" >
                 <tr>
                   <th scope="col">StudentName</th>
                   <th scope="col">Email</th>
                   <th scope="col">ContactNo</th>
                   <th scope="col">DateOfBirth</th>
                   <th scope="col">Gender</th>
-                  <th scope="col" class="text text-center">Operation</th>
+                  <th scope="col">Image</th>
+                  <th scope="col" colspan="3" class="text text-center">Operation</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -31,12 +35,17 @@
                     <td scope="col">{{$item['contactno']}}</td>
                     <td scope="col">{{$item['dateofbirth']}}</td>
                     <td scope="col">{{$item['gender']}}</td>
-                    <td scope="col"><a href={{"delete/".$item['id']}}  class="btn btn-danger btn-sm text-dark glyphicon glyphicon-trash" >Delete</a> 
-                    <a  href="{{route('edit',['id' =>$item->id])}}"  class="btn btn-warning btn-sm text-dark glyphicon glyphicon-edit"  >Update</a></td>
-                    {{-- <a  href={{"edit/".$item['id']}}  class="btn btn-warning btn-sm text-dark" >Update</a></td> --}}
-                  </tr>
+                    <td scope="col"><img src="{{ asset($item->image) }}" alt="" title="" style="width: 60px; height: 60px;">
+
+                    </td>
+
+                  
+                    <td scope="col"><a href={{"delete/".$item['id']}}  class="btn btn-danger  text-dark " >Delete</a></td>
+                  <td>  <a  href="{{route('edit',['id' =>$item->id])}}"  class="btn btn-warning  text-dark "  >Update</a></td>
+                   {{-- <td> <a  href="{{route('forcedelete',['id' =>$item->id])}}"  class="btn btn-danger  text-dark "  >Force Delete</a> --}}
+                 
                   @endforeach
-                
+                 
               </tbody>
     
     

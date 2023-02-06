@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum("gender",['male','female','other']);
             $table->string("image")->nullable();
             $table->string("password");
-            $table->string("confirm_password");
+           
             $table->timestamps();
             $table->softDeletes();
         });
