@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Owner extends Model
+class song extends Model
 {
     use HasFactory;
 
 
+        public function singers(){
+            return $this->belongsToMany(singer::class,'singersongs');
+        }
+   
 }

@@ -6,7 +6,12 @@ use App\Http\Controllers\categoryController;
 use App\Http\Controllers\Blogs;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\SingerController;
+use App\Http\Controllers\SongController;
+
+
 use App\Models\Owner;
+use App\Models\song;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,3 +87,16 @@ Route::get('addowner/{id}',[OwnerController::class,'addOwner'])->name('addowner'
 
 //==========================get Owner name based on category id using hasOneThrought ===================================
 Route::get('getowner/{id}',[OwnerController::class,'get_Owner'])->name('getowner');
+
+
+//===================================Many To Many Routes========================================================
+
+Route::get('addsong',[SongController::class,'addSong'])->name('addsong');
+
+Route::get('addsinger/{id}',[SingerController::class,'addSinger'])->name('addsinger');
+
+Route::get('addsinger',[SingerController::class,'addSinger'])->name('addsinger');
+
+Route::get('showsong/{id}',[SongController::class,'showSong'])->name('showsong');
+
+Route::get('showsinger/{id}',[SingerController::class,'showSinger'])->name('showsinger');
