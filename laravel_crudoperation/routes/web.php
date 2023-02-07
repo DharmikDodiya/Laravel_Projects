@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\categoryController;
 use App\Http\Controllers\Blogs;
-
+use App\Http\Controllers\indexController;
+use App\Http\Controllers\OwnerController;
+use App\Models\Owner;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +20,7 @@ use App\Http\Controllers\Blogs;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
 
@@ -47,3 +50,35 @@ Route::get('restoredata/{id}',[StudentController::class,'restoreData'])->name('r
 //=================================================Blog Routes===================================================
 
 Route::get('list',[Blogs::class,'list'])->name('list');
+
+
+
+Route::get('showcategory/{id}',[Blogs::class,'show_category'])->name('showcategory');
+
+
+Route::get('addblog/{id}',[Blogs::class,'addblog'])->name('addblog');
+
+
+Route::get('showblogdata/{id}',[Blogs::class,'showBlogdata'])->name('showblogdata');
+
+
+//===============================================category Routes===============================================
+
+Route::get('addcategory',[categoryController::class,'addCategory'])->name('addcategory');
+
+Route::get('showblog/{id}',[categoryController::class,'showblog'])->name('showblog');
+
+
+Route::get('index/{id}',[indexController::class,'index'])->name('index');
+
+Route::get('showcategorydata/{id}',[categoryController::class,'showCategory'])->name('showcategorydata');
+
+Route::get('indexdata/{id}',[indexController::class,'indexdata'])->name('indexdata');
+
+
+
+Route::get('addowner/{id}',[OwnerController::class,'addOwner'])->name('addowner');
+
+
+//==========================get Owner name based on category id using hasOneThrought ===================================
+Route::get('getowner/{id}',[OwnerController::class,'get_Owner'])->name('getowner');

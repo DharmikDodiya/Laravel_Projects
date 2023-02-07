@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
+
 class StudentController extends Controller
 {
     /**
@@ -42,6 +43,7 @@ class StudentController extends Controller
             'gender'=>'required',
             'image'=>'required',
             'password'=>'required',
+           
             'confirm_password'=>'required|same:password'
     ]);
 
