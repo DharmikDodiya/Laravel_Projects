@@ -51,6 +51,10 @@
 
     <h1 class="text text-center">Deleted Data Table</h1>
 
+    <div class="container">
+      <a  href="{{route('restoreall')}}" class="btn btn-success  text-dark "  >Restore All</a>
+    </div>
+
 
 
     <div class="container">
@@ -83,7 +87,7 @@
                   
                     <td scope="col"><a href={{"restoredata/".$item['id']}}  class="btn btn-danger  text-dark " >Restore Me</a></td>
                  
-                   <td> <a  href="{{route('forcedelete',['id' =>$item->id])}}"  class="btn btn-danger  text-dark "  >Force Delete</a>
+                   <td> <a  href="{{route('forcedelete',['id' =>$item->id])}}"  class="btn btn-danger  text-dark "  >Force Delete</a></td>
                  
                   @endforeach
                  

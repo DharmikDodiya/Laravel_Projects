@@ -156,9 +156,12 @@ class StudentController extends Controller
     
        Student::onlyTrashed()->find($id)->restore();
        return redirect()->route('restore');
-
     }
-
+    public function restoreAll() 
+    {
+        Student::onlyTrashed()->restore();
+        return redirect()->route('addstudent')->withSuccess(__('All users restored successfully.'));
+    }
 
 
 }
