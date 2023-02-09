@@ -45,7 +45,8 @@
                   </span><br>
     
                     <label for="exampleFormControlInput1" class="form-label">Date Of Birth</label>
-                    <input type="date" class="form-control" id="dob" name="dob"  value="{{$data['dateofbirth']}}" placeholder="Enter Date Of Birth">
+                    <input type="date" class="form-control" id="dob" name="dob"  value="{{date('Y-m-d',strtotime($data->dateofbirth))}}">
+                    
                     <span class="text-danger">
                       @error('dob')
                           {{$message}}
@@ -54,7 +55,7 @@
     
                     <div> <label for="exampleFormControlInput1" class="form-label">Gender</label></div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="male" {{ $data->gender == 'male' ? 'checked' : ''}}>
+                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="male" {{$data->gender == 'male' ? 'checked' : ''}}>
                         <label class="form-check-label" for="inlineRadio1">Male</label>
                       </div>
                       <div class="form-check form-check-inline">

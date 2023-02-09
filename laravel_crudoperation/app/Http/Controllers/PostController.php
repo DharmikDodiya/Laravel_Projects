@@ -27,6 +27,12 @@ class PostController extends Controller
         return $post->tags;
     }
 
+    public function Manytomany(){
+         $post = Video::find(2);
+        //  $post->tags()->attach([1,2]);
+        return $post->tags;
+    }
+
 
 
 }

@@ -34,7 +34,7 @@
                     <td scope="col">{{$item['email']}}</td>
                     <td scope="col">{{$item['contactno']}}</td>
                     <td scope="col">{{$item['dateofbirth']}}</td>
-                    <td scope="col">{{$item['gender']}}</td>
+                    <td scope="col">{{strtoupper($item['gender'])}}</td>
                     <td scope="col"><img src="{{ asset($item->image) }}" alt="" title="" style="width: 60px; height: 60px;">
 
                     </td>

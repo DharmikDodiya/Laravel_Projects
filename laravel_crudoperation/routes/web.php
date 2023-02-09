@@ -52,7 +52,7 @@ Route::get('restoredata/{id}',[StudentController::class,'restoreData'])->name('r
 
 Route::get('restoreall',[StudentController::class,'restoreAll'])->name('restoreall');
 
-Route::get('relation',[StudentController::class,'relation'])->name('relation');
+Route::get('relation/{id}',[StudentController::class,'relation'])->name('relation');
 
 //=================================================Blog Routes===================================================
 
@@ -125,3 +125,7 @@ Route::get('showvideocomment',[VideoController::class,'showdata'])->name('showvi
 //==================================Polymorphic Relationship One Of Many==========================================================
 
 Route::get('gettags',[PostController::class,'gettags'])->name('gettags');
+
+//==================================Polymorphic Relationship Many Of Many==========================================================
+
+Route::get('many-to-many',[PostController::class,'Manytomany'])->name('many-to-many');

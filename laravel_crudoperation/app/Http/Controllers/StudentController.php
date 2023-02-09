@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Department;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -36,14 +38,16 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $todaydate = date('Y/m/d');
+        
         $request->validate(['name'=>'required',
             'email'=>'required|email|unique:students',
             'contactno'=>'required|numeric|digits:10|unique:students',
-            'dob'=>'required',
             'gender'=>'required',
             'image'=>'required',
+            'dob' => 'required|before_or_equal:'.$todaydate,
             'password'=>'required',
-           
             'confirm_password'=>'required|same:password'
     ]);
 
@@ -161,6 +165,12 @@ class StudentController extends Controller
     {
         Student::onlyTrashed()->restore();
         return redirect()->route('addstudent')->withSuccess(__('All users restored successfully.'));
+    }
+
+
+    public function relation($id){
+        $student = Department::find($id)->student;
+        return $student;
     }
 
 

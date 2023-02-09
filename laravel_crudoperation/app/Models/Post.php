@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Comment;
-use App\Models\tag;
+use App\Models\Tag;
 
 class Post extends Model
 {
@@ -19,7 +19,7 @@ class Post extends Model
     }
 
     public function tags(){
-        return $this->morphToMany(tag::class,'taggable');
+        return $this->morphToMany(Tag::class,'taggable');
     }
 
 }
