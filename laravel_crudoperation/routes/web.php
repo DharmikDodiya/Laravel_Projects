@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SingerController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\VideoController;
+use App\Models\Blog;
 use App\Models\Owner;
 use App\Models\song;
 
@@ -24,16 +25,44 @@ use App\Models\song;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-// Route::get('/index', function () {
-//     return view('index');
+// Route::get('/', function () {
+//     return view('login');
 // });
 
-Route::get('addstudent',[StudentController::class,'index'])->name('addstudent');
+
+// Route::post('login',function(){
+//     return "done";
+// })->name('login');
+
+// Route::group(['middleware'=>['guard']],function () {
+//     Route::get('/', function () {
+//         return view('login');
+//     });
+//     Route::post('login',function(){
+//         return redirect()->route('addstudent');
+//     })->name('login');
+
+//     Route::get('no-access',function(){
+//         return "not access this page vai group";
+//     })->name('no-access');
+//     // Route::get('addstudent',[StudentController::class,'index'])->name('addstudent');
+    
+// });
+Route::get('/', function () {
+        return view('login');
+    });
+
+    Route::get('no-access',function(){
+                return "not access this page vai group";
+            })->name('no-access');
+
+
+//=====================================================middleware practice=============================================
+
+
+
+Route::get('addstudent',[StudentController::class,'index'])->name('addstudent')->middleware('guard');
+
 Route::post('/store',[StudentController::class,'store']);
 
 Route::get('show',[StudentController::class,'show']);
@@ -56,17 +85,15 @@ Route::get('relation/{id}',[StudentController::class,'relation'])->name('relatio
 
 //=================================================Blog Routes===================================================
 
-Route::get('list',[Blogs::class,'list'])->name('list');
 
-
+Route::get('list',[Blogs::class,'list'])->name('list')->middleware('checkid');
 
 Route::get('showcategory/{id}',[Blogs::class,'show_category'])->name('showcategory');
 
-
 Route::get('addblog/{id}',[Blogs::class,'addblog'])->name('addblog');
 
-
 Route::get('showblogdata/{id}',[Blogs::class,'showBlogdata'])->name('showblogdata');
+
 
 
 //===============================================category Routes===============================================
@@ -129,3 +156,30 @@ Route::get('gettags',[PostController::class,'gettags'])->name('gettags');
 //==================================Polymorphic Relationship Many Of Many==========================================================
 
 Route::get('many-to-many',[PostController::class,'Manytomany'])->name('many-to-many');
+
+//====================================Middleware Route==============================================================================
+
+Route::get('/', function () {
+            return view('login');
+        });
+Route::get('loginid',function(){
+    session()->put('user_id',1);
+    return redirect('/');
+});
+Route::get('logout',function(){
+    session()->forget('user_id');
+    return redirect()->back();
+});
+Route::get('notaccess',function(){
+    return "not access this page vai route";
+})->name('no-access');
+
+
+//====================================Response Route==============================================================================
+
+Route::get('response',function(){
+    return response()->json([
+        'name' => 'Dharmik',
+        'City' => 'Mangrol'
+    ])->header('content-Type','text/html');
+});
