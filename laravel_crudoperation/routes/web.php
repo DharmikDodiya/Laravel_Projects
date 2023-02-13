@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\Blogs;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PostController;
@@ -13,6 +15,10 @@ use App\Http\Controllers\VideoController;
 use App\Models\Blog;
 use App\Models\Owner;
 use App\Models\song;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Whoops\Run;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +31,9 @@ use App\Models\song;
 |
 */
 
-// Route::get('/', function () {
-//     return view('login');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 // Route::post('login',function(){
@@ -48,9 +54,9 @@ use App\Models\song;
 //     // Route::get('addstudent',[StudentController::class,'index'])->name('addstudent');
     
 // });
-Route::get('/', function () {
-        return view('login');
-    });
+// Route::get('/', function () {
+//         return view('login');
+//     });
 
     Route::get('no-access',function(){
                 return "not access this page vai group";
@@ -159,9 +165,9 @@ Route::get('many-to-many',[PostController::class,'Manytomany'])->name('many-to-m
 
 //====================================Middleware Route==============================================================================
 
-Route::get('/', function () {
-            return view('login');
-        });
+// Route::get('/login', function () {
+//             return view('login');
+//         });
 Route::get('loginid',function(){
     session()->put('user_id',1);
     return redirect('/');
@@ -183,3 +189,34 @@ Route::get('response',function(){
         'City' => 'Mangrol'
     ])->header('content-Type','text/html');
 });
+
+
+//====================================Response Route==============================================================================
+
+// Route::get('/mailsend',function(){
+//     Mail::to('ddd@gmail.com')->send(new TestMail());
+//     dd('send mail SuccessFully');
+// });
+
+Route::get('/mailsend',[EmailController::class,'index']);
+
+
+//=======================================Custome Authenication==============================================================
+
+Route::get('login',[AuthController::class,'index'])->name('login');
+
+Route::get('register',[AuthController::class,'registerView'])->name('register');
+
+Route::post('login',[AuthController::class,'login'])->name('login');
+
+Route::post('register',[AuthController::class,'register'])->name('register');
+
+
+
+Route::get('logout',[AuthController::class,'logout'])->name('logout');
+
+//Auth::routes(['verify'=>true]);
+
+Route::get('home',[AuthController::class,'home'])->name('home')->middleware(['auth','is_verify_email']);
+
+//Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify'); 
