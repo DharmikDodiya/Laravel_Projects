@@ -29,6 +29,9 @@
                   <li class="nav-item">
                     <a class="nav-link btn-dark" href="{{route('restore')}}">Restore All</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link btn-dark" href="{{route('logout')}}">LogOut</a>
+                  </li>
                  </ul>
               </div>
             </div>

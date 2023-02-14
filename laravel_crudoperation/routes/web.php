@@ -67,7 +67,7 @@ Route::get('/', function () {
 
 
 
-Route::get('addstudent',[StudentController::class,'index'])->name('addstudent')->middleware('guard');
+Route::get('addstudent',[StudentController::class,'index'])->name('addstudent');
 
 Route::post('/store',[StudentController::class,'store']);
 
@@ -92,7 +92,7 @@ Route::get('relation/{id}',[StudentController::class,'relation'])->name('relatio
 //=================================================Blog Routes===================================================
 
 
-Route::get('list',[Blogs::class,'list'])->name('list')->middleware('checkid');
+Route::get('list',[Blogs::class,'list'])->name('list')->middleware('checkid')->middleware('guard');
 
 Route::get('showcategory/{id}',[Blogs::class,'show_category'])->name('showcategory');
 
@@ -217,6 +217,17 @@ Route::get('logout',[AuthController::class,'logout'])->name('logout');
 
 //Auth::routes(['verify'=>true]);
 
-Route::get('home',[AuthController::class,'home'])->name('home')->middleware(['auth','is_verify_email']);
+Route::get('home',[AuthController::class,'home'])->name('home')->middleware(['auth']);
 
-//Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify'); 
+Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('userverify'); 
+
+
+Route::get('forgetpassword',[AuthController::class,'forgetPassword_View'])->name('forgetpassword');
+
+Route::post('forgetpassword',[AuthController::class,'forgetPassword'])->name('forgetpassword');
+
+
+Route::get('resetPassword',[AuthController::class,'resetPasswordView'])->name('resetPassword');
+
+
+Route::post('resetPassword',[AuthController::class,'resetPassword'])->name('resetPassword');

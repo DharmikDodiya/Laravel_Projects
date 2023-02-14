@@ -33,8 +33,12 @@
                     {{$message}}
                 @enderror 
             </span>
-               <br>
-              <button type="submit" class="btn btn-primary" name="login" value="Login"> Login </button>  
+            
+            <a href="{{route('forgetpassword')}}" class="">Forget Password</a>
+               <br><br>
+              <button type="submit" class="btn btn-primary btn-lg btn-lg mr-lg-5" name="login" value="Login"> Login </button>  
+
+              <a href="{{route('register')}}" class="btn btn-dark btn-lg btn-lg mr-lg-5" >Register</a>
             </form>  
           </div>  
         </div>  

@@ -51,7 +51,8 @@
             @enderror 
         </span>
         <br>
-          <button type="submit" class="btn btn-primary" value="Register" name="register"> Register </button>  
+          <button type="submit" class="btn btn-primary btn-lg mr-lg-5" value="Register" name="register"> Register </button>  
+          <a href="{{route('login')}}" class="btn btn-dark btn-lg mr-5" >Login</a>
         </form>  
       </div>  
     </div>  
