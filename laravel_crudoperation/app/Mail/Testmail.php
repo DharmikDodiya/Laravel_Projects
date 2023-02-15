@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Http\Controllers\EmailController;
+use App\Models\User;
 
 class Testmail extends Mailable
 {
@@ -19,10 +20,11 @@ class Testmail extends Mailable
      *
      * @return void
      */
-    public $data;
-    public function __construct($data)
+    //public $data;
+    public User $user;
+    public function __construct($user)
     {
-        $this->data = $data;
+        $this->user = $user;
     }
 
     /**

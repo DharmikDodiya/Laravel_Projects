@@ -35,7 +35,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-
+//=============================user login =====================================
     public function login(Request $request){
         $request->validate([
             'email'=>'required',
@@ -43,16 +43,20 @@ class AuthController extends Controller
         ]);
 
         //login code
-        if(Auth::attempt($request->only('email','password'))){
-            //return $request; 
+        // if(Auth::attempt($request->only('email','password'))){ 
+        //     return redirect('addstudent');
+        // }
+        if(Auth::attempt(['email' =>$request->email,'password' => $request->password , 'status' => 1])){
             return redirect('addstudent');
         }
         else{
-            return $request; 
+            return back()->withError('These credentials do not match our records.');
         }
 
     }
 
+
+//=============================user Register =====================================
     public function register(Request $request){
         $request->validate([
             'name' => 'required',
@@ -76,42 +80,10 @@ class AuthController extends Controller
         //     return redirect('home');
         // }
 
-        return redirect('register')->withErrors('Error');
+        return redirect('success')->with('success','your message is send check your mail');
     }
     
-    // public function register(Request $request){
-    //         $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|unique:users|email',
-    //         'password' => 'required|same:password_confirmation|min:6',
-    //         'password_confirmation' => 'required',
-    //     ]);
-
-    //     $data = $request->all();
-    //     $createUser = $this->create($data);
-
-    //     $token = Str::random(64);
-
-
-    //     UserVerify::create([
-    //         'user_id' => $createUser->id,
-    //         'token' => $token
-    //     ]);
-
-    //     Mail::send('emails.emailVerificationEmail', ['token' => $token], function($message) use($request){
-    //         $message->to($request->email);
-    //         $message->subject('Email Verification Mail');
-    //     });
-
-        
-       
-    //   return redirect("home")->withSuccess('Great! You have Successfully loggedin');
-    // }
-       
     
-
-
-
     public function home()
     {
         if(Auth::check()){
@@ -121,6 +93,9 @@ class AuthController extends Controller
         return redirect("login")->withSuccess('Opps! You do not have access');
     }
 
+
+
+//=============================user Logout =====================================
     public function logout(){
         Session::flush();
         Auth::logout();
@@ -141,6 +116,9 @@ class AuthController extends Controller
 
     }
 
+
+//=============================user Verify Accout =====================================
+
     public function verifyAccount($token)
     {
         $verifyUser = User::where('token', $token)->first();
@@ -154,15 +132,24 @@ class AuthController extends Controller
                 $verifyUser->token = '';
                 $verifyUser->save();
                 $message = "Your e-mail is verified. You can now login.";
-                return redirect()->route('login')->with('message', $message);
+                return redirect()->route('success')->with('success', 'your email is verified you can now login');
             } 
+            else{
+                return redirect()->route('error')->with('error', 'Your Email Is Already Verified!!! ');
+            }
      
     }
 
 
+
+//=============================user ForgetPassword View =====================================
+
     public function forgetPassword_View(){
         return view('auth.forgetpassword');
     }
+
+
+//=============================user forgetPassword Code =====================================
 
     public function forgetPassword(Request $request){
         try{    
@@ -192,7 +179,7 @@ class AuthController extends Controller
                         'created_at' => $datetime 
                     ]
                 );
-                return back()->with('success','Please Check Your Mail And Reset Your Password');
+                return redirect('success')->with('success','Please Check Your Mail And Reset Your Password');
             }
             else{
                 return back()->with('error','Email Is Not Exists!');
@@ -204,6 +191,9 @@ class AuthController extends Controller
         }
     }
 
+
+
+//=============================user ResetPassword View =====================================
     public function resetPasswordView(Request $request){
         $resetdata = PasswordReset::where('token',$request->token)->first();
         $resetdata = PasswordReset::all();
@@ -220,6 +210,9 @@ class AuthController extends Controller
         }
     }
 
+
+//=============================user ResetPassword Code =====================================
+
     public function resetPassword(Request $request){
         
         
@@ -231,7 +224,19 @@ class AuthController extends Controller
         $user->update(['password' => Hash::make($request->password)]);
 
         //PasswordReset::where('email',$user->email)->delete();
-        return "<h2>Your password has Been Reset SuccessFully</h2>";
+        return redirect('success')->with('success','your Password has Been Change Successfully');
     }
+
+
+//======================================return success View==================================
+
+    public function successView(){
+        return view('auth.success')->with('success','Please Check Your Mail and Verify It');
+    }
+
+    public function errorView(){
+        return view('auth.error')->with('error','sorry Your mail Is Not Send ');
+    }
+
     
 }

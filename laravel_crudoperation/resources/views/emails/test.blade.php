@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Using Controller Mail</title>
+    <title>Using Queue & Jobs Mail</title>
 </head>
 <body>
-    <h1>{{ $data['title'] }}</h1>
-    <p>{{ $data['body'] }}</p>
+    <h1>{{ $user->name }}</h1>
+    <p>{{ $user->email}}</p>
 
-    <p>Hii using Controller</p>
+   
 </body>
 </html>
 

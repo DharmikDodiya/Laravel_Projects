@@ -12,12 +12,14 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SingerController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\VideoController;
+use App\Jobs\SendTestMailJob;
 use App\Models\Blog;
 use App\Models\Owner;
 use App\Models\song;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 use Whoops\Run;
 
 /*
@@ -231,3 +233,19 @@ Route::get('resetPassword',[AuthController::class,'resetPasswordView'])->name('r
 
 
 Route::post('resetPassword',[AuthController::class,'resetPassword'])->name('resetPassword');
+
+
+Route::get('success',[AuthController::class,'successView'])->name('success');
+Route::get('error',[AuthController::class,'errorView'])->name('error');
+
+
+//=====================================================Queue & Job===========================================================
+
+Route::get('jobmail',function(){
+   
+    $user = User::findOrFail(1);
+    SendTestMailJob::dispatch($user)->delay(now()->addSeconds(5));
+
+
+    echo "mail Send";
+});
