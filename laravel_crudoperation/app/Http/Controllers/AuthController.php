@@ -47,7 +47,7 @@ class AuthController extends Controller
         //     return redirect('addstudent');
         // }
         if(Auth::attempt(['email' =>$request->email,'password' => $request->password , 'status' => 1])){
-            return redirect('addstudent');
+            return redirect('addstudent'); 
         }
         else{
             return back()->withError('These credentials do not match our records.');
