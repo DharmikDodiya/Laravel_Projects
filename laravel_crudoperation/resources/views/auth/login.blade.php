@@ -8,7 +8,7 @@
     <div class="container">  
       <div class="row">  
         <div class="col-md-4 offset-md-4">  
-          <div class="login-form form-holder ">  
+          <div class="login-form form-holder table table-bordered ">  
             <h1 class="text-center">Login Form</h1>
             <form action="{{route('login')}}" method="POST" >
                 @csrf
@@ -39,7 +39,7 @@
                 @enderror 
             </span>
             
-            <a href="{{route('forgetpassword')}}" class="">Forget Password</a>
+            <a href="{{route('forgetpassword')}}" class="btn btn-link">Forget Password</a>
                <br><br>
                <span class="text-danger">
                 {{-- @if(count($errors) > 0)
@@ -52,9 +52,9 @@
                 {{Session::get('error')}}
                 @endif
               </span>
-              <button type="submit" class="btn btn-primary btn-lg btn-lg mr-lg-5" name="login" value="Login"> Login </button>  
+              <button type="submit" class="btn btn-success btn-lg btn-lg mr-lg-5" name="login" value="Login"> Login </button>  
 
-              <a href="{{route('register')}}" class="btn btn-dark btn-lg btn-lg mr-lg-5" >Register</a>
+              <a href="{{route('register')}}" class="btn btn-primary btn-lg btn-lg mr-lg-5" >Register</a>
             </form>  
           </div>  
         </div>  

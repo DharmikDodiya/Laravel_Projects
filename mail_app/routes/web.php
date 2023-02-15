@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\MessageNotification;
 use Illuminate\Support\Facades\Route;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
@@ -22,4 +23,13 @@ Route::get('/', function () {
 
 Route::get('/mailsend',function(){
     Mail::to('d@gmail.com')->send(new TestMail());
+});
+
+Route::get('/event', function () {
+    event(new MessageNotification('This Is Our First BroadCast Message'));
+});
+
+
+Route::get('/listen', function () {
+    return view('listen');
 });

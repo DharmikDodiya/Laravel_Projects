@@ -5,7 +5,7 @@
 
 <div class="container">  
   <div class="row">  
-    <div class="col-md-4 offset-md-4">  
+    <div class="col-md-4 offset-md-4 table table-bordered">  
       <div class="login-form form-holder" >  
         <h1 class="text-center">Register Form</h1>
         <form action="{{route('register')}}" method="POST" >
@@ -51,8 +51,8 @@
             @enderror 
         </span>
         <br>
-          <button type="submit" class="btn btn-primary btn-lg mr-lg-5" value="Register" name="register"> Register </button>  
-          <a href="{{route('login')}}" class="btn btn-dark btn-lg mr-5" >Login</a>
+          <button type="submit" class="btn btn-success btn-lg mr-lg-5" value="Register" name="register"> Register </button>  
+          <a href="{{route('login')}}" class="btn btn-info btn-lg mr-5" >Login</a>
         </form>  
       </div>  
     </div>  

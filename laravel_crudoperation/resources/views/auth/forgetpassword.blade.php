@@ -29,6 +29,7 @@
               
             <br>
             <button type="submit" class="btn btn-primary btn-lg btn-lg mr-lg-5" name="forgetPassword" value="send"> Send Mail </button>
+            <a href="{{route('login')}}" class="btn btn-dark btn-lg btn-lg mr-lg-5" >Login</a>
               </form>  
             </div>  
           </div>  
