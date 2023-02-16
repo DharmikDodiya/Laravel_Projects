@@ -18,7 +18,7 @@ use App\Models\PasswordReset;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
-
+use App\Traits\DateTrait;
 use Illuminate\Support\Str;
 
 
@@ -26,6 +26,7 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    use DateTrait;
     
     public function index(){
         return view('auth.login');
@@ -76,14 +77,12 @@ class AuthController extends Controller
 
         $user->notify(new VerifyEmail($user));
 
-        // if(Auth::attempt($request->only('email','password'))){
-        //     return redirect('home');
-        // }
-
         return redirect('success')->with('success','your message is send check your mail');
     }
     
-    
+
+//=============================Home page =====================================
+
     public function home()
     {
         if(Auth::check()){
@@ -238,5 +237,13 @@ class AuthController extends Controller
         return view('auth.error')->with('error','sorry Your mail Is Not Send ');
     }
 
-    
+//=========================================Traits Class Method=========================================
+
+    public function dateFormat(){
+       echo $date = date("Y-m-d H:i:s")."<br>";
+        echo $this->date_format($date);
+    }
+
+
+
 }

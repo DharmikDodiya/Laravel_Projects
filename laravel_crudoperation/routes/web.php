@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Custom;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
@@ -20,7 +21,10 @@ use App\Mail\TestMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use Psy\Readline\Hoa\Autocompleter;
 use Whoops\Run;
+use App\Http\Controllers\FileUpload;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -249,3 +253,30 @@ Route::get('jobmail',function(){
 
     echo "mail Send";
 });
+
+//======================================================using Helper Class===================================================
+
+Route::get('helper',function(){
+    echo message('Dharmik');
+});
+
+Route::get('helperclass',function(){
+    echo Custom::uppercase('hello dharmik');
+});
+
+
+//======================================================using Traits Class===================================================
+
+Route::get('traits',[AuthController::class,'dateFormat']);
+
+
+//======================================================File storage Route===================================================
+
+Route::get('/uploadfile', [FileUpload::class, 'createForm']);
+Route::post('/uploadfile', [FileUpload::class, 'fileUpload'])->name('fileUpload');
+
+Route::get('filedisplay',[FileUpload::class,'show']);
+
+Route::get('downloadfile/{id}',[FileUpload::class,'downloadfile']);
+
+Route::get('/delete/{id}',[FileUpload::class,'destroy']);
