@@ -48,12 +48,21 @@ class FileUpload extends Controller
         return response()->download($downloadfile);
     }
     
-    public function destroy($id){
+    public function destroyfile($id){
         $filedata = File::find($id);
-        //$data = storage_path().'/app/public/uploads/'.$filedata->name;
-        //unlink($data);
-        $filedata->delete();
+        // $data = storage_path().'/app/public/uploads/'.$filedata->name;
+        // unlink($data);
+        $filedata->delete();    
+        return response()->json(['status' =>'ImageFile Deleted SuccessFully']);
 
-        return redirect('filedisplay');
+        //return redirect('filedisplay');
+    }
+
+
+    public function getAllFile(){
+        $files = Storage::allFiles('public');
+        $storagename = str_replace('public','storage',$files);
+      //  dd($storagename);
+        return view('file.getallfile',['files'=>$storagename]);
     }
 }

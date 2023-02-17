@@ -86,7 +86,7 @@ class AuthController extends Controller
     public function home()
     {
         if(Auth::check()){
-            return view('home');
+            return redirect('addstudent');
         }
   
         return redirect("login")->withSuccess('Opps! You do not have access');

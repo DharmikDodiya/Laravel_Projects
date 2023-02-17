@@ -40,6 +40,7 @@
               <tbody>
                 @foreach ($data as $item)
                 <tr>
+                    <input type="hidden" class="deletefileid" value="{{$item['id']}}">
                     <td scope="col" class="text-center">{{$item['fileholdername']}}</td>
                    
                     <td scope="col" class="text-center">
@@ -48,7 +49,9 @@
                     </td>
                  
                     <td class="text-center"><a href="{{url('downloadfile',['name'=>$item->name])}}"  class="btn btn-info text-dark btn-md" >Download</a></td>
-                    <td class="text-center"> <a  href="{{url('delete',['id' =>$item->id])}}"  class="btn btn-danger btn-md"  >Delete</a></td>
+                    {{-- <td class="text-center"> <a  href="{{url('deletefile',['id' =>$item->id])}}"  class="btn btn-danger btn-md"  >Delete</a></td> --}}
+
+                    <td class="text-center"><button type="button" class="deletefile btn btn-danger">Delete</button> </td>
                 @endforeach
                  
               </tbody>
@@ -57,7 +60,73 @@
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+
+  $(document).ready(function(){
+
+      $.ajaxSetup({
+        headers:{
+          'X-CSRF-TOKEN' :$('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+
+      $('.deletefile').click(function(e){
+        e.preventDefault();
+
+        var deleted_id = $(this).closest("tr").find('.deletefileid').val();
+        //alert(deleted_id);
+            swal({
+              title: "Are you sure?",
+              text: "Once deleted, you will not be able to recover this imaginary file!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                
+                var data = {
+                  "_token":$('input[name=_token]').val(),
+                  "id" : deleted_id,
+                }
+                $.ajax({
+                    type : "GET",
+                    url : '/deletefile/'+deleted_id,
+                    data : data,
+                    success:function(response){
+                      swal(response.status, {
+                           icon: "success",
+                           timer :2000,
+                           buttons :false,
+                      })
+                      .then((result) => {
+                          location.reload();
+                      });
+                    }
+                });
+            } 
+            else {
+               swal("Your imaginary file is safe!",{
+               timer :2000,
+              buttons :false,
+
+            });
+          }
+        });
+              
+      });
+  });
+
+
+
+    </script>
+
+
+
+
   </body>
 </html>
 

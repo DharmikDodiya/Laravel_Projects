@@ -10,6 +10,7 @@
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -32,12 +33,17 @@
                   <li class="nav-item">
                     <a class="nav-link btn-dark" href="{{route('logout')}}">LogOut</a>
                   </li>
+                
                  </ul>
               </div>
             </div>
           </nav>
       </div>
-<h1 class="text text-center h1"> Student Register Page</h1>
+
+      
+
+<h2 class="text-lg-center text-bg-dark container">welcome {{Auth::user()->name}}</h2>
+<h1 class="text text-center h1"> Student Data </h1>
 <div class="container">
 <button type="button" class="btn btn-dark text-lg-center btn-pading btn-lg" data-bs-toggle="modal" data-bs-target="#addstudent">
     Add Blog
@@ -153,28 +159,18 @@
       </div>
     </div>
   </div>
-
-
-
 <div>
     @include('display');
 </div>
-
 @if(count($errors) >0)
     <script>
       
         $(document).ready(function(){
             $('#addstudent').modal('show');
          });
+
     </script>
-
- 
 @endif
-
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 </body>

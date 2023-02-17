@@ -24,6 +24,8 @@ use App\Models\User;
 use Psy\Readline\Hoa\Autocompleter;
 use Whoops\Run;
 use App\Http\Controllers\FileUpload;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\LangController;
 
 
 /*
@@ -279,4 +281,17 @@ Route::get('filedisplay',[FileUpload::class,'show']);
 
 Route::get('downloadfile/{id}',[FileUpload::class,'downloadfile']);
 
-Route::get('/delete/{id}',[FileUpload::class,'destroy']);
+Route::get('/deletefile/{id}',[FileUpload::class,'destroyfile']);
+
+Route::get('getallfile',[FileUpload::class,'getAllFile']);
+
+
+//======================================================Localization Route====================================================
+
+Route::get('/main/{lang}',function($lang = null){
+    App::setLocale($lang);
+    return view('language');
+});
+
+
+// Route::get('lang/change', [LangController::class, 'change'])->name('changeLang');

@@ -73,7 +73,7 @@
                     </span><br>
     
                     <label for="exampleFormControlInput1" class="form-label">Image</label>
-                    <input type="file" class="form-control" id="image" name="image"  value="{{$data['image']}}" placeholder="Enter Image">
+                    <input type="file" class="form-control" id="image" name="image"  value="{{asset(public_path().$data['image'])}}" placeholder="Enter Image">
                     <span class="text-danger">
                       @error('image')
                           {{$message}}

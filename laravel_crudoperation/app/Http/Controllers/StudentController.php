@@ -140,7 +140,8 @@ class StudentController extends Controller
     {
         $studentdata = Student::find($id);
         $studentdata->delete();
-        return redirect('addstudent');
+        //return redirect('addstudent');
+        return response()->json(['status' =>'Your StudentData Deleted SuccessFully']);
     }
 
 
