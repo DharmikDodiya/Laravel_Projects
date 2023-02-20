@@ -149,18 +149,21 @@ class StudentController extends Controller
     {
         $studentdata = Student::onlyTrashed()->find($id);
         $studentdata->forcedelete();
-        return redirect()->route('restore');
+        //return redirect()->route('restore');
+        return response()->json(['status'=>'Your StudentData Is Permenant Deleted']);
     }
 
     public function deletedDataShow(){
     $data = Student::onlyTrashed()->get();
         return view('restore',compact('data'));
+         
     }
 
     public function restoreData($id){
     
        Student::onlyTrashed()->find($id)->restore();
        return redirect()->route('restore');
+      
     }
     public function restoreAll() 
     {

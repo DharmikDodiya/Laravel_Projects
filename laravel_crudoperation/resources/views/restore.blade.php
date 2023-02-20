@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="./assets/style.css" rel="stylesheet">
+
     
     <title class="text text-center">Deleted Data Table</title>
 </head>
@@ -52,7 +53,7 @@
     <h1 class="text text-center">Deleted Data Table</h1>
 
     <div class="container">
-      <a  href="{{route('restoreall')}}" class="btn btn-success  text-dark "  >Restore All</a>
+      <a  href="{{route('restoreall')}}" class="btn btn-success btn-lg text-dark ">Restore All</a>
     </div>
 
 
@@ -75,6 +76,7 @@
               <tbody>
                 @foreach ($data as $item)
                 <tr>
+                  <input type="hidden" class="forcedeleteid" value="{{$item['id']}}">
                     <td scope="col">{{$item['studentname']}}</td>
                     <td scope="col">{{$item['email']}}</td>
                     <td scope="col">{{$item['contactno']}}</td>
@@ -85,10 +87,10 @@
                     </td>
 
                   
-                    <td scope="col"><a href={{"restoredata/".$item['id']}}  class="btn btn-danger  text-dark " >Restore Me</a></td>
+                    <td scope="col"><a href={{"restoredata/".$item['id']}}  class="btn btn-primary  text-dark " >Restore Me</a></td>
                  
-                   <td> <a  href="{{route('forcedelete',['id' =>$item->id])}}"  class="btn btn-danger  text-dark "  >Force Delete</a></td>
-                 
+                    {{-- <td> <a  href="{{route('forcedelete',['id' =>$item->id])}}"  class="btn btn-danger  text-dark "  >Force Delete</a></td> --}}
+                   <td> <button type="button" class="forcedeletebtn btn btn-danger btn-group-sm text-dark">Force Delete</button></td>
                   @endforeach
                  
               </tbody>
@@ -97,13 +99,70 @@
         </table>
     </div>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function(){
+      $.ajaxSetup({
+          headers:{
+            'X-CSRF-TOKEN' :$('meta[name="csrf-token"]').attr('content')
+          }
+        });
+$('.forcedeletebtn').click(function(e){
+  e.preventDefault();
+
+  var deleted_id = $(this).closest("tr").find('.forcedeleteid').val();
+  //alert(deleted_id);
+      swal({
+        title: "Are you sure?",
+        text: "You Want to permentent delete this Student Data!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          
+          var data = {
+            "_token":$('input[name=_token]').val(),
+            "id" : deleted_id,
+          }
+          $.ajax({
+              type : "GET",
+              url : '/forcedelete/'+deleted_id,
+              data : data,
+              success:function(response){
+                swal(response.status, {
+                     icon: "success",
+                     timer :2000,
+                     buttons :false,
+                })
+                .then((result) => {
+                    location.reload();
+                });
+              }
+          });
+      } 
+      else {
+         swal("Your Student Data is safe!",{
+         timer :2000,
+        buttons :false,
+
+      });
+    }
+  });
+        
+});
+});
+
+  </script>
 
 
 
     
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+   
 </body>
 </html>
 
