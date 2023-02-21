@@ -9,9 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Traits\ErrorMessage;
+
 
 class UserController extends BaseController
 {
+    use ErrorMessage;
+
+//=================================User Register ===================================================
     public function createUser(Request $request)
     {
         try {
@@ -24,11 +29,9 @@ class UserController extends BaseController
             ]);
 
             if($validateUser->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
+              
+                $error = $this->ErrorResponse($validateUser);
+                return $error;
             }
 
             $user = User::create([
@@ -38,7 +41,7 @@ class UserController extends BaseController
             ]);
 
             return response()->json([
-                'status' => true,
+                'status' => 200,
                 'message' => 'User Created Successfully',
                 'data' => $user,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
@@ -52,6 +55,7 @@ class UserController extends BaseController
         }
     }
 
+//=================================User Login ===================================================
     public function loginUser(Request $request)
     {
         try {
@@ -62,11 +66,8 @@ class UserController extends BaseController
             ]);
 
             if($validateUser->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
+                $error = $this->ErrorResponse($validateUser);
+                return $error;
             }
 
             if(!Auth::attempt($request->only(['email', 'password']))){
@@ -79,7 +80,7 @@ class UserController extends BaseController
             $user = User::where('email', $request->email)->first();
 
             return response()->json([
-                'status' => true,
+                'status' => 200,
                 'message' => 'User Logged In Successfully',
                 'data' => $user,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
@@ -93,6 +94,8 @@ class UserController extends BaseController
         }
     }
 
+//=================================User Update ===================================================
+
     public function update(Request $request, User $user){
         $input = $request->all();
         $validateUser = Validator::make($input, [
@@ -101,58 +104,53 @@ class UserController extends BaseController
             'password' => 'required',
         ]);
 
+
+
         if($validateUser->fails()){
-            //return $this->sendError($validateUser->errors());
-            return response()->json([
-                'status' => false,
-                'message' => 'validation error'
-            ],401);     
+            $error = $this->ErrorResponse($validateUser);
+            return $error;    
         }
         $user->name = $input['name'];
         $user->email = $input['email'];
-        $user->password = $input['password'];
+        $user->password = Hash::make($input['password']);
         $user->save();
         
-        //return $this->sendResponse(new UserController($user), 'data updated.');
-
         return response()->json([
-            'status' => 'success',
+            'status' => 200,
             'message' => 'Data Updated',
             'data' => $user,
         ],200);
 
     }
 
+//=================================All User Data Dispaly ===================================================
 
     public function index(){
         $user = User::all();
         if (is_null($user)) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data Not Found',
-            ], 401);
+            $error = $this->DataNotFound();
+            return $error;
         }
         else{
         return response()->json([
-            'status' => true,
+            'status' => 200,
             'message' => 'All User Data Fetched Successfully',
             'data' => $user,
         ], 200);
         }
     }
-    
+
+//=================================Display UserData Using Specific Id ===================================================
     public function show($id)
     {
         $user = User::find($id);
         if (is_null($user)) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data Not Found',
-            ], 401);
+            $error = $this->DataNotFound();
+            return $error;
         }
         else{
         return response()->json([
-            'status' => true,
+            'status' => 200,
             'message' => 'User Data Fetched Successfully',
             'data' => $user,
         ], 200);
@@ -160,20 +158,19 @@ class UserController extends BaseController
         }
     }
 
+//=================================User Delete ===================================================
 
     public function destroy($id){
         $user = User::find($id);
        
         if(is_null($user)){
-            return response()->json([
-                'status' => false,
-                'message' => 'Data Not Found'
-            ],401);
+            $error = $this->DataNotFound();
+            return $error;
         }
         else{
             $user->delete();
             return response()->json([
-                'status' => true,
+                'status' => 200,
                 'message' => 'Data Deleted Successfully',
             ],200);
         }
